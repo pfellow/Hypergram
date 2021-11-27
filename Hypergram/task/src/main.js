@@ -71,7 +71,7 @@ let Truncate = function (number) {
     } else if (number > 255) {
         return 255;
     } else {
-        return Math.trunc(number);
+        return Math.round(number);
     }
     
 }
@@ -80,6 +80,7 @@ const ChangePicture = function (newBrightness, newContrast, newTransparency) {
 
     let pixels = Uint8ClampedArray.from(initialPixels);
     const factor = 259 * (255 + newContrast) / (255 * (259 - newContrast));
+    console.log(factor);
 
     for (let i = 0; i < pixels.length; i = i + 4) {
 
