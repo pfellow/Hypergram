@@ -40,32 +40,12 @@ fileInput.addEventListener('change', function(ev) {
     }
 });
 
-document.getElementById("brightness").addEventListener("change", function () {
-
-    ChangePicture(Number(document.getElementById("brightness").value),
-        Number(document.getElementById("contrast").value),
-        parseFloat(document.getElementById("transparent").value));
-
-});
-
-document.getElementById("contrast").addEventListener("change", function () {
-
-    ChangePicture(Number(document.getElementById("brightness").value),
-        Number(document.getElementById("contrast").value),
-        parseFloat(document.getElementById("transparent").value));
-
-});
-
-document.getElementById("transparent").addEventListener("change", function () {
-
-    ChangePicture(Number(document.getElementById("brightness").value),
-        Number(document.getElementById("contrast").value),
-        parseFloat(document.getElementById("transparent").value));
-
-});
+document.getElementById("brightness").addEventListener("change", () => ChangePicture());
+document.getElementById("contrast").addEventListener("change", () => ChangePicture());
+document.getElementById("transparent").addEventListener("change", () => ChangePicture());
 
 let Truncate = function (number) {
-    
+
     if (number < 0) {
         return 0;
     } else if (number > 255) {
@@ -73,14 +53,16 @@ let Truncate = function (number) {
     } else {
         return Math.round(number);
     }
-    
+
 }
 
-const ChangePicture = function (newBrightness, newContrast, newTransparency) {
+const ChangePicture = function () {
 
+    let newBrightness = Number(document.getElementById("brightness").value);
+    let newContrast = Number(document.getElementById("contrast").value);
+    let newTransparency = parseFloat(document.getElementById("transparent").value);
     let pixels = Uint8ClampedArray.from(initialPixels);
     const factor = 259 * (255 + newContrast) / (255 * (259 - newContrast));
-    console.log(factor);
 
     for (let i = 0; i < pixels.length; i = i + 4) {
 

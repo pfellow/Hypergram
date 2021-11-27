@@ -375,6 +375,128 @@ files:
   visible: false
   text: iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAACPklEQVRIS+2UP2gUQRjFf6vin2pR/NNGCAoJWAQEG0XstEqTQtjFJZUQuCAWQRsRbARBcijELmEFCyGFhZVlKrMcqCAEBCvFNIGDFP4f+eZ27+bmdnYnxxGbTLPHzDfvfe+9+yaIlMr4DyvYI94t1/es3i2nsazezIlPjayBkBZtpgbwcmIh3A8cHxnhaV7zmWtOvGBBvcmu8opJtjialyWkwM6bCVmnzXmKr8AtEyN45p7sBx/VjewMfzRli2P622RxR8ptULkse4s0uzg2efBbRc4nM+FhHoE7c1vdB46wyjT3eDHQ/DwN7YhW/FY1sim2nAo7ttcvsbRY97k+QGzjVCoWIB9ik7SsxRYhTZ70HQWR+pIts1AqSTL3zdtF/he4RUPjFzZrqyVjUWVfTHgEVM+znW9VIKJ6hYg2FzoZf1dRdsC4IR3OeuZaXLvCAy6xwZiDuSwu/YDcZpZJfnWv7TMAyjP+ARwCnhGxxnM9hj9J2OYy8BU4CYig9RgOTsDjOwXoOPBJnszeOIXA3EsIZ+AE8A24q+vlpJOSayX5wWHgrFX0Tj8k/auPWI7mYnjqN0HOJgRjPIUNYElPRmeZ5EMT3yRlyZhdu4s6Ad7ELiLXfhmxWTtAbHaexilx2nuR5GfsEcM54GJNZJXEVXMpZ0Lwvq7Ica6JCyV1uQlGlWqfOAoX+xSbF8XRnsnVsuxIfEzwsrpMyTBkZkPBmlJZMRY+KuviMKOwa4f+V1dl7PtH62ZsKvbJZlQ1/wCm4/pMsVG1DgAAAABJRU5ErkJggg==
   learner_created: false
+- name: src/main.css
+  visible: true
+  text: |-
+    body {
+        width: 95vw;
+        height: 95vh;
+        margin: auto;
+        background-color: azure;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    main {
+        width: 90vw;
+        height: 90vh;
+        background-color: white;
+        display: flex;
+    }
+
+    .canvas {
+        width: 75vw;
+        height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .panel {
+        width: 25vw;
+        height: 90vh;
+        background-color: lightblue;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        font-family: "Roboto Light", sans-serif;
+    }
+
+    input {
+        margin-bottom: 3vh;
+    }
+
+    #file-input {
+        visibility: hidden;
+    }
+
+    button, .upload-file-button {
+        margin-top: 3vh;
+        width: 15vw;
+        height: 4.5vh;
+        border: 0;
+        font-size: 1.75vh;
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .upload-file-button {
+        background-color: darksalmon;
+    }
+
+    #save-button {
+        background-color: dimgray;
+    }
+
+    label {
+        font-size: 1.5vh;
+        font-weight: bold;
+        margin-bottom: .5vh;
+    }
+
+    input[type="range"] {
+        width: 15vw;
+    }
+  learner_created: true
+- name: src/main.js
+  visible: true
+  text: "let canvas = document.getElementById('canvas');\nlet ctx = canvas.getContext('2d');\n\
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);\nlet initialPixels\
+    \ = imageData.data;\n\nlet fileInput = document.getElementById('file-input');\n\
+    \n\nfileInput.addEventListener('change', function(ev) {\n\n    if(ev.target.files)\
+    \ {\n        let file = ev.target.files[0];\n        let reader  = new FileReader();\n\
+    \        reader.readAsDataURL(file);\n        reader.onloadend = function (e)\
+    \ {\n            let image = new Image();\n            image.src = e.target.result;\n\
+    \            image.onload = function() {\n\n                let divCanvas = document.getElementsByClassName(\"\
+    canvas\")[0];\n                let canvasWidth =  divCanvas.offsetWidth;\n   \
+    \             let canvasHeight = divCanvas.offsetHeight;\n\n                if\
+    \ (image.width <= canvasWidth && image.height <= canvasHeight) {\n           \
+    \         canvas.width = image.width;\n                    canvas.height = image.height;\n\
+    \                } else if (image.width / canvasWidth > image.height / canvasHeight)\
+    \ {\n                    canvas.width = canvasWidth * .95;\n                 \
+    \   canvas.height = image.height / image.width * canvasWidth * .95;\n        \
+    \        } else {\n                    canvas.width = image.width / image.height\
+    \ * canvasHeight * .95;\n                    canvas.height = canvasHeight * .95;\n\
+    \                }\n\n                ctx.drawImage(image, 0, 0, canvas.width,\
+    \ canvas.height);\n                imageData = ctx.getImageData(0, 0, canvas.width,\
+    \ canvas.height);\n                initialPixels = imageData.data;\n         \
+    \   }\n        }\n    }\n});\n\ndocument.getElementById(\"brightness\").addEventListener(\"\
+    change\", function () {\n\n    ChangePicture(Number(document.getElementById(\"\
+    brightness\").value),\n        Number(document.getElementById(\"contrast\").value),\n\
+    \        parseFloat(document.getElementById(\"transparent\").value));\n\n});\n\
+    \ndocument.getElementById(\"contrast\").addEventListener(\"change\", function\
+    \ () {\n\n    ChangePicture(Number(document.getElementById(\"brightness\").value),\n\
+    \        Number(document.getElementById(\"contrast\").value),\n        parseFloat(document.getElementById(\"\
+    transparent\").value));\n\n});\n\ndocument.getElementById(\"transparent\").addEventListener(\"\
+    change\", function () {\n\n    ChangePicture(Number(document.getElementById(\"\
+    brightness\").value),\n        Number(document.getElementById(\"contrast\").value),\n\
+    \        parseFloat(document.getElementById(\"transparent\").value));\n\n});\n\
+    \nlet Truncate = function (number) {\n    \n    if (number < 0) {\n        return\
+    \ 0;\n    } else if (number > 255) {\n        return 255;\n    } else {\n    \
+    \    return Math.round(number);\n    }\n    \n}\n\nconst ChangePicture = function\
+    \ (newBrightness, newContrast, newTransparency) {\n\n    let pixels = Uint8ClampedArray.from(initialPixels);\n\
+    \    const factor = 259 * (255 + newContrast) / (255 * (259 - newContrast));\n\
+    \    console.log(factor);\n\n    for (let i = 0; i < pixels.length; i = i + 4)\
+    \ {\n\n        pixels[i] = Truncate(factor * (pixels[i] - 128) + 128 + newBrightness);\n\
+    \        pixels[i+1] = Truncate(factor * (pixels[i+1] - 128) + 128  + newBrightness);\n\
+    \        pixels[i+2] = Truncate(factor * (pixels[i+2] - 128) + 128  + newBrightness);\n\
+    \        pixels[i+3] = pixels[i+3] * newTransparency;\n\n    }\n\n    ctx.putImageData(new\
+    \ ImageData(pixels, canvas.width), 0, 0);\n\n}\n"
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/199/stages/992/implement#comment
 status: Unchecked
-record: -1
+record: 4
