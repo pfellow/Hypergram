@@ -1,0 +1,73 @@
+body {
+    width: 95vw;
+    height: 95vh;
+    margin: auto;
+    background-color: azure;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main {
+    width: 90vw;
+    height: 90vh;
+    background-color: white;
+    display: flex;
+}
+
+.canvas {
+    width: 75vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel {
+    width: 25vw;
+    height: 90vh;
+    background-color: lightblue;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    font-family: "Roboto Light", sans-serif;
+}
+
+input {
+    margin-bottom: 3vh;
+}
+
+#file-input {
+    visibility: hidden;
+}
+
+button, .upload-file-button {
+    margin-top: 3vh;
+    width: 15vw;
+    height: 4.5vh;
+    border: 0;
+    font-size: 1.75vh;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.upload-file-button {
+    background-color: darksalmon;
+}
+
+#save-button {
+    background-color: dimgray;
+}
+
+label {
+    font-size: 1.5vh;
+    font-weight: bold;
+    margin-bottom: .5vh;
+}
+
+input[type="range"] {
+    width: 15vw;
+}
